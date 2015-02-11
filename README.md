@@ -3,7 +3,7 @@
 mChroot is a very simple script that mounts your unix system with an overlay and then chroots into it. This is very useful when expermenting with installing new software. You can run the script like so:
 
 ```bash
-sudo . mchroot.sh
+sudo bash mchroot.sh
 # now in chroot env
 
 exit

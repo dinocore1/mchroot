@@ -7,7 +7,7 @@
 ENV_ROOT="/tmp/mchroot"
 OVERLAY_ROOT="/tmp/mchroot-overlay"
 
-UNDERLAY_DIRS="bin etc home lib lib32 lib64 usr var"
+UNDERLAY_DIRS="bin sbin etc home lib lib32 lib64 usr var"
 
 for dir in $UNDERLAY_DIRS; do
   mkdir -p "$ENV_ROOT/$dir"
