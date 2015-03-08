@@ -25,7 +25,22 @@ mount -t sysfs sys $ENV_ROOT/sys
 mkdir -p $ENV_ROOT/dev
 mount -o bind /dev $ENV_ROOT/dev
 
-chroot $ENV_ROOT
+mkdir -p $ENV_ROOT/tmp
+mount -t tmpfs -o size=512M tmpfs $ENV_ROOT/tmp
+
+cat /etc/resolv.conf > $ENV_ROOT/tmp/resolv.conf
+cat <<EOF > $ENV_ROOT/tmp/mchroot_bash.rc
+export PS1="\[\e[31m\]mchroot\[\e[m\]:\u\\$ "
+alias ls="ls --color"
+EOF
+
+cat <<EOF > $ENV_ROOT/tmp/startup.sh
+rm /etc/resolv.conf
+cp /tmp/resolv.conf /etc/resolv.conf
+/bin/bash --rcfile /tmp/mchroot_bash.rc -i
+EOF
+
+chroot $ENV_ROOT /bin/bash -c ". /tmp/startup.sh"
 
 #kill all processes in chroot
 
@@ -55,3 +70,4 @@ done
 umount $ENV_ROOT/proc
 umount $ENV_ROOT/sys
 umount $ENV_ROOT/dev
+umount $ENV_ROOT/tmp

@@ -33,3 +33,4 @@ done
 umount $ENV_ROOT/proc
 umount $ENV_ROOT/sys
 umount $ENV_ROOT/dev
+umount $ENV_ROOT/tmp
